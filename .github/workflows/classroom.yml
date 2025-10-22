@@ -1,0 +1,114 @@
+name: Classroom
+
+on: [push]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      # --- Проверка 1: подключён CSS-файл ---
+      - name: Проверка подключения style.css
+        run: |
+          if grep -Eiq '<link[^>]+href="style\.css"[^>]*>' index.html; then
+            echo "✅ CSS подключён"
+          else
+            echo "❌ Не найдено подключение style.css"
+          fi
+
+      # --- Проверка 2: нет встроенных стилей ---
+      - name: Проверка на встроенные стили
+        run: |
+          if grep -Eiq '<[^>]+style=' index.html; then
+            echo "❌ Найдены встроенные стили — нужно использовать style.css"
+          else
+            echo "✅ Встроенных стилей не найдено"
+          fi
+
+      # --- Проверка 3: свойства шрифта ---
+      - name: Проверка font-family
+        run: |
+          if grep -Eiq 'font-family' style.css; then
+            echo "✅ Найдено свойство font-family"
+          else
+            echo "❌ Не найдено свойство font-family"
+          fi
+
+      - name: Проверка font-style
+        run: |
+          if grep -Eiq 'font-style\s*:\s*(italic|oblique)' style.css; then
+            echo "✅ Найдено свойство font-style (italic/oblique)"
+          else
+            echo "❌ Не найдено свойство font-style"
+          fi
+
+      - name: Проверка font-variant
+        run: |
+          if grep -Eiq 'font-variant\s*:\s*small-caps' style.css; then
+            echo "✅ Найдено свойство font-variant small-caps"
+          else
+            echo "❌ Не найдено свойство font-variant small-caps"
+          fi
+
+      - name: Проверка font-weight
+        run: |
+          if grep -Eiq 'font-weight\s*:\s*bold' style.css; then
+            echo "✅ Найдено свойство font-weight bold"
+          else
+            echo "❌ Не найдено свойство font-weight bold"
+          fi
+
+      - name: Проверка font-size
+        run: |
+          if grep -Eiq 'font-size' style.css; then
+            echo "✅ Найдено свойство font-size"
+          else
+            echo "❌ Не найдено свойство font-size"
+          fi
+
+      # --- Проверка 4: hover ---
+      - name: Проверка псевдокласса hover
+        run: |
+          if grep -Eiq ':hover' style.css; then
+            echo "✅ Найден псевдокласс :hover"
+          else
+            echo "❌ Псевдокласс :hover не найден"
+          fi
+
+      # --- Проверка 5: text-decoration ---
+      - name: Проверка text-decoration
+        run: |
+          if grep -Eiq 'text-decoration' style.css; then
+            echo "✅ Найдено свойство text-decoration"
+          else
+            echo "❌ Не найдено свойство text-decoration"
+          fi
+
+      # --- Проверка 6: text-align ---
+      - name: Проверка text-align
+        run: |
+          if grep -Eiq 'text-align\s*:\s*center' style.css; then
+            echo "✅ Найдено свойство text-align center"
+          else
+            echo "❌ Не найдено свойство text-align center"
+          fi
+
+      # --- Проверка 7: text-indent ---
+      - name: Проверка text-indent
+        run: |
+          if grep -Eiq 'text-indent' style.css; then
+            echo "✅ Найдено свойство text-indent"
+          else
+            echo "❌ Не найдено свойство text-indent"
+          fi
+
+      # --- Проверка 8: text-transform ---
+      - name: Проверка text-transform
+        run: |
+          if grep -Eiq 'text-transform\s*:\s*(capitalize|uppercase|lowercase)' style.css; then
+            echo "✅ Найдено свойство text-transform"
+          else
+            echo "❌ Не найдено свойство text-transform"
+          fi
